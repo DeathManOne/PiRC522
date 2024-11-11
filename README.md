@@ -46,15 +46,18 @@ I could not test those commands, because i do not have either a magic card or a 
 ### Dump all data
 ```python
   sectorCount:int = 16
+  key:list = [0xff,0xff,0xff,0xff,0xff,0xff]
 
-  datas:list = rfid.mifareDump(rfid.MF_AUTH_A|B, key_a|b, sectorCount, uid)
+  datas:list = rfid.mifareDump(rfid.MF_AUTH_A|B, key, sectorCount, uid)
   for data in datas:
       print (data)
 ```
 
 ### De/Authentication
 ```python
-  success:bool = rfid.mifareAuthenticate(rfid.MF_AUTH_A|B, blockAddress, key_a|b, uid)
+  key:list = [0xff,0xff,0xff,0xff,0xff,0xff]
+
+  success:bool = rfid.mifareAuthenticate(rfid.MF_AUTH_A|B, blockAddress, key, uid)
   rfid.mifareDeauthenticate()
 ```
 
