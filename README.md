@@ -9,18 +9,17 @@ and
 [Ondřej Ondryáš](https://github.com/ondryaso/pi-rc522)
 
 ## Not tested commands
-I could not test those commands, because i do not have either a magic card or a 7 byte UID card
+I could not test those commands, because i do not have neither a **magic card** or a **7 byte UID card**
 
 ### Private
 ```python
-  status:str = __mifareOpenBackdoor()
+  status:str = __mifareOpenBackdoor(maxTryPerUnbrickCode:int)
 ```
 
 ### Public
 ```python
-  success:bool = mifareSevenByteUidFirstInit(typeFn:int)
-  success:bool = mifareChangeUid(data:list)
-  success:bool = mifareUnbrickUid()
+  success:bool = mifareSevenByteUidFirstInit(typeFn:int) # typeFn between 0 and 3
+  success:bool = mifareChangeUid(data:list, maxTryPerUnbrickCode:int)
 ```
 ## Commands
 
