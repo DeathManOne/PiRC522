@@ -1,6 +1,7 @@
 
 # PiRC522 - complete driver
-For Raspberry Pi. You only need to enable **SPI** with **raspi-config**
+- For Raspberry Pi.
+- You only need to enable **SPI** with **raspi-config**
 
 ## Documentation
 From
@@ -9,7 +10,9 @@ and
 [Ondřej Ondryáš](https://github.com/ondryaso/pi-rc522)
 
 ## Not tested commands
-I could not test those commands, because i do not have neither a **magic card** or a **7 byte UID card**
+I could not test those commands, because i do not have
+- a **magic card**
+- a **7 byte UID card**
 
 ### Private
 ```python
@@ -72,7 +75,8 @@ I could not test those commands, because i do not have neither a **magic card** 
 
 ### Value block
 #### Format value block
-Always format the block with **mifareFormatValueBlock** before **increment**, **decrement**, **restore** and **transfer**
+- Always format the block with **mifareFormatValueBlock** before **increment**, **decrement**, **restore** and **transfer**
+- Only need to format once, not more
 ```python
   initialValue:int = 3
   success:bool = mifareFormatValueBlock(blocAddress, initialValue)
@@ -91,7 +95,10 @@ Always format the block with **mifareFormatValueBlock** before **increment**, **
 ```
 
 #### Transfer
-Always use **mifareTransfer** after **increment**, **decrement**, but not required after **restore**
+Always use **mifareTransfer** after
+- **increment**
+- **decrement**
+- but not required after **restore**
 ```python
   (success, value) = rfid.mifareTransfer(blockAddress)
   # success is a bool
