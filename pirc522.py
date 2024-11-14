@@ -308,12 +308,21 @@ class MFRC522():
         if len(data) != 3: return (False, [])
         return (True, data)
 
-    def __mifareOpenBackdoor(self) -> str:
-        if not self.__piccHalt(): return "ERROR_HALT"
+    def __mifareOpenBackdoor(self, maxTryPerUnbrickCode:int) -> str:
+        unbrickCodes:list = [
+            [0x01, 0x02, 0x03, 0x04, 0x04, 0x08, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+            [0x01, 0x23, 0x45, 0x67, 0x00, 0x08, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+            [0x12, 0x34, 0x56, 0x78, 0x08, 0x08, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+        ]
+        for unbrickCode in unbrickCodes:
+            for passing in range(maxTryPerUnbrickCode + 1):
+                if not self.__piccHalt(): return "ERROR_HALT"
 
-        status = self.__mifareTransceive([0x40], False)
-        if status != "OK": return status
-        return self.__mifareTransceive([0x43], False)
+                status = self.__mifareTransceive([0x40], False)
+                if status == "OK":  return self.__mifareTransceive([0x43], False)
+                if passing >= maxTryPerUnbrickCode: return "UID_BRICKED"
+                if self.mifareWrite(0, unbrickCode): continue
+        return "ERROR_UNBRICK"
 
     def __softReset(self) -> None:
         self.__spiWrite(self.RC_COMMAND, self.CMD_SOFT_RESET)
@@ -521,23 +530,17 @@ class MFRC522():
         if status != "OK": return False
         return self.__mifareTransceive(data, False) == "OK"
 
-    def mifareChangeUid(self, data:list) -> bool:
+    def mifareChangeUid(self, data:list, maxTryPerUnbrickCode:int) -> bool:
         if len(data) < 16: return False
         if len(data) > 16: data = data[0:16]
+        if data[4] != data[0] ^ data[1] ^ data[2] ^ data[3]: return False
 
-        if self.__mifareOpenBackdoor() != "OK": return False
+        if self.__mifareOpenBackdoor(maxTryPerUnbrickCode) != "OK": return False
         if not self.mifareWrite(0, data): return False
 
         if self.__piccHalt():
             self.piccRequest(self.MF_WUP_A)
         return True
-
-    def mifareUnbrickUid(self) -> bool:
-        data:list = [0x01, 0x02, 0x03, 0x04,
-                     0x04, 0x08, 0x04, 0x00,
-                     0x00, 0x00, 0x00, 0x00,
-                     0x00, 0x00, 0x00, 0x00]
-        return self.mifareChangeUid(data)
 
     def mifareChangeTrailer(self, sector:int, keys:list, accessBits:list) -> bool:
         if len(keys) != 2: return False
