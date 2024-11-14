@@ -320,7 +320,7 @@ class MFRC522():
 
                 status = self.__mifareTransceive([0x40], False)
                 if status == "OK":  return self.__mifareTransceive([0x43], False)
-                if passing >= maxTryPerUnbrickCode: break
+                if passing >= maxTryPerUnbrickCode - 1: break
                 if self.mifareWrite(0, unbrickCode): continue
         return "UID_BRICKED"
 
