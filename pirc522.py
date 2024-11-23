@@ -570,7 +570,7 @@ class MFRC522():
         block:int = (sector * 4) + 3
         return self.mifareWrite(block, buffer)
 
-    def mifareDump(self, authKeyType:int, key:list, sectorCount:int, uid:list) -> list:
+    def mifareDump(self, useKeyB:bool, key:list, sectorCount:int, uid:list) -> list:
         datas:list = []
 
         for block in range(sectorCount * 4):
@@ -578,7 +578,7 @@ class MFRC522():
             sector:int = (block - byte) // 4
 
             if byte == 0:
-                if not self.mifareAuthenticate(authKeyType, block, key, uid): continue
+                if not self.mifareAuthenticate(useKeyB, block, key, uid): continue
 
             (success, data) = self.mifareRead(block)
             datas.append(f"{sector:3d}" + "-" + str(byte) + " " + str(data))
