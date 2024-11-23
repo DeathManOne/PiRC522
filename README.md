@@ -98,7 +98,7 @@ I could not test those commands, because i do not have
 Always use **mifareTransfer** after
 - **increment**
 - **decrement**
-- but not required after **restore**
+- but not required after **restore**, it's already did in driver
 ```python
   (success, value) = rfid.mifareTransfer(blockAddress)
   # success is a bool
