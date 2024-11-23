@@ -453,14 +453,16 @@ class MFRC522():
             if (sak & 0x04) == 0: break
         return (True, uid, sak, self.__piccType(sak))
 
-    def mifareAuthenticate(self, authKeyType:int, blockAddress:int, key:list, uid:list) -> bool:
-        if authKeyType != self.__MF_AUTH_A and authKeyType != self.__MF_AUTH_B: return False
+    def mifareAuthenticate(self, useKeyB:bool, blockAddress:int, key:list, uid:list) -> bool:
         if len(key) < 6: return False
         if len(uid) < 4 : return False
         if len(key) > 6: key = key[0:6]
         if len(uid) > 4: uid = uid[0:4]
+        
+        keyType:int = self.__MF_AUTH_A
+        if useKeyB: keyType = self.__MF_AUTH_B
 
-        buffer:list = [authKeyType, blockAddress]
+        buffer:list = [keyType, blockAddress]
         for k in key: buffer.append(k)
         for id in uid: buffer.append(id)
         (status, data, validBits) = self.__piccCommunication(self.__CMD_AUTHENTICATION, buffer, 0x00, False)
