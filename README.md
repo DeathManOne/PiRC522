@@ -37,7 +37,7 @@ I could not test those commands, because i do not have
 
   rfid:MFRC522 = MFRC522(pinIrq, pinReset, speed)
   antennaLevel:int = rfid.piccWaitTag(antennaLevel, timeout)
-  success:bool = rfid.piccRequest(True|False) # True = Request | False = WakeUp
+  success:bool = rfid.piccRequest(True|False) # True = WakeUp | False = Request
   (success, uid, sak, piccType) = rfid.piccSelect()
   # success is a bool
   # uid is a list
