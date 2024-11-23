@@ -6,99 +6,99 @@ import threading
 import time
 
 class MFRC522():
-    CMD_IDLE = 0x00
-    CMD_MEM = 0x01
-    CMD_RANDOM_ID = 0x02
-    CMD_CALCULATE_CRC = 0x03
-    CMD_TRANSMIT = 0x04
-    CMD_NO_CHANGE = 0x07
-    CMD_RECEIVE = 0x08
-    CMD_TRANSCEIVE = 0x0C
-    CMD_AUTHENTICATION = 0x0E
-    CMD_SOFT_RESET = 0x0F
+    __CMD_IDLE = 0x00
+    __CMD_MEM = 0x01
+    __CMD_RANDOM_ID = 0x02
+    __CMD_CALCULATE_CRC = 0x03
+    __CMD_TRANSMIT = 0x04
+    __CMD_NO_CHANGE = 0x07
+    __CMD_RECEIVE = 0x08
+    __CMD_TRANSCEIVE = 0x0C
+    __CMD_AUTHENTICATION = 0x0E
+    __CMD_SOFT_RESET = 0x0F
 
-    MF_REQ_A = 0x26
-    MF_WUP_A = 0x52
-    MF_CL_1_ANTICOLLISION = [0x93, 0x20]
-    MF_CL_1_SELECT = [0x93, 0x70]
-    MF_CL_2_ANTICOLLISION = [0x95, 0x20]
-    MF_CL_2_SELECT = [0x95, 0x70]
-    MF_CL_3_ANTICOLLISION = [0x97, 0x20]
-    MF_CL_3_SELECT = [0x97, 0x70]
-    MF_HALT = [0x50, 0x00]
-    MF_AUTH_A = 0x60
-    MF_AUTH_B = 0x61
-    MF_UID_PERSONALIZE = 0x40
-    MF_SET_MOD_TYPE = 0x43
-    MF_READ = 0x30
-    MF_WRITE = 0xA0
-    MF_DECREMENT = 0xC0
-    MF_INCREMENT = 0xC1
-    MF_RESTORE = 0xC2
-    MF_TRANSFER = 0xB0
-    MF_UL_WRITE = 0XA2
+    __MF_REQ_A = 0x26
+    __MF_WUP_A = 0x52
+    __MF_CL_1_ANTICOLLISION = [0x93, 0x20]
+    __MF_CL_1_SELECT = [0x93, 0x70]
+    __MF_CL_2_ANTICOLLISION = [0x95, 0x20]
+    __MF_CL_2_SELECT = [0x95, 0x70]
+    __MF_CL_3_ANTICOLLISION = [0x97, 0x20]
+    __MF_CL_3_SELECT = [0x97, 0x70]
+    __MF_HALT = [0x50, 0x00]
+    __MF_AUTH_A = 0x60
+    __MF_AUTH_B = 0x61
+    __MF_UID_PERSONALIZE = 0x40
+    __MF_SET_MOD_TYPE = 0x43
+    __MF_READ = 0x30
+    __MF_WRITE = 0xA0
+    __MF_DECREMENT = 0xC0
+    __MF_INCREMENT = 0xC1
+    __MF_RESTORE = 0xC2
+    __MF_TRANSFER = 0xB0
+    __MF_UL_WRITE = 0XA2
 
-    RC_COMMAND = 0x01
-    RC_COM_I_EN = 0x02
-    RC_DIV_I_EN = 0x03
-    RC_COM_IRQ = 0x04
-    RC_DIV_IRQ = 0x05
-    RC_ERROR = 0x06
-    RC_STATUS_1 = 0x07
-    RC_STATUS_2 = 0x08
-    RC_FIFO_DATA = 0x09
-    RC_FIFO_LEVEL = 0x0A
-    RC_WATER_LEVEL = 0x0B
-    RC_CONTROL = 0x0C
-    RC_BIT_FRAMING = 0x0D
-    RC_COLL = 0x0E
+    __RC_COMMAND = 0x01
+    __RC_COM_I_EN = 0x02
+    __RC_DIV_I_EN = 0x03
+    __RC_COM_IRQ = 0x04
+    __RC_DIV_IRQ = 0x05
+    __RC_ERROR = 0x06
+    __RC_STATUS_1 = 0x07
+    __RC_STATUS_2 = 0x08
+    __RC_FIFO_DATA = 0x09
+    __RC_FIFO_LEVEL = 0x0A
+    __RC_WATER_LEVEL = 0x0B
+    __RC_CONTROL = 0x0C
+    __RC_BIT_FRAMING = 0x0D
+    __RC_COLL = 0x0E
 
-    RC_MODE = 0x11
-    RC_TX_MODE = 0x12
-    RC_RX_MODE = 0x13
-    RC_TX_CONTROL = 0x14
-    RC_TX_ASK = 0x15
-    RC_TX_SEL = 0x16
-    RC_RX_SEL = 0x17
-    RC_RX_THRESHOLD = 0x18
-    RC_DEMOD = 0x19
-    RC_MF_TX = 0x1C
-    RC_MF_RX = 0x1D
-    RC_SERIAL_SPEED = 0x1F
+    __RC_MODE = 0x11
+    __RC_TX_MODE = 0x12
+    __RC_RX_MODE = 0x13
+    __RC_TX_CONTROL = 0x14
+    __RC_TX_ASK = 0x15
+    __RC_TX_SEL = 0x16
+    __RC_RX_SEL = 0x17
+    __RC_RX_THRESHOLD = 0x18
+    __RC_DEMOD = 0x19
+    __RC_MF_TX = 0x1C
+    __RC_MF_RX = 0x1D
+    __RC_SERIAL_SPEED = 0x1F
 
-    RC_CRC_RESULT_HIGH = 0x21
-    RC_CRC_RESULT_LOW = 0x22
-    RC_MOD_WIDTH = 0x24
-    RC_RFC_FG = 0x26
-    RC_GS_N = 0x27
-    RC_CW_GS_P = 0x28
-    RC_MOD_GS_P = 0x29
-    RC_T_MOD = 0x2A
-    RC_T_PRESCALER = 0x2B
-    RC_T_RELOAD_HIGH = 0x2C
-    RC_T_RELOAD_LOW = 0x2D
-    RC_T_COUNTER_VAL_HIGH = 0x2E
-    RC_T_COUNTER_VAL_LOW = 0x2F
+    __RC_CRC_RESULT_HIGH = 0x21
+    __RC_CRC_RESULT_LOW = 0x22
+    __RC_MOD_WIDTH = 0x24
+    __RC_RFC_FG = 0x26
+    __RC_GS_N = 0x27
+    __RC_CW_GS_P = 0x28
+    __RC_MOD_GS_P = 0x29
+    __RC_T_MOD = 0x2A
+    __RC_T_PRESCALER = 0x2B
+    __RC_T_RELOAD_HIGH = 0x2C
+    __RC_T_RELOAD_LOW = 0x2D
+    __RC_T_COUNTER_VAL_HIGH = 0x2E
+    __RC_T_COUNTER_VAL_LOW = 0x2F
 
-    RC_TEST_SEL_1 = 0x31
-    RC_TEST_SEL_2 = 0x32
-    RC_TEST_PIN_EN = 0x33
-    RC_TEST_PIN_VALUE = 0x34
-    RC_TEST_BUS = 0x35
-    RC_AUTO_TEST = 0x36
-    RC_VERSION = 0x37
-    RC_ANALOG_TEST = 0x38
-    RC_TEST_DAC_1 = 0x39
-    RC_TEST_DAC_2 = 0x3A
-    RC_TEST_ADC = 0x3B
+    __RC_TEST_SEL_1 = 0x31
+    __RC_TEST_SEL_2 = 0x32
+    __RC_TEST_PIN_EN = 0x33
+    __RC_TEST_PIN_VALUE = 0x34
+    __RC_TEST_BUS = 0x35
+    __RC_AUTO_TEST = 0x36
+    __RC_VERSION = 0x37
+    __RC_ANALOG_TEST = 0x38
+    __RC_TEST_DAC_1 = 0x39
+    __RC_TEST_DAC_2 = 0x3A
+    __RC_TEST_ADC = 0x3B
 
     def __init__(self, pinIrq:int, pinReset:int, maxSpeedHz:int) -> None:
-        self._PIN_IRQ:int = pinIrq
-        self._IRQ:threading = threading.Event()
+        self.__PIN_IRQ:int = pinIrq
+        self.__IRQ:threading = threading.Event()
 
-        self._SPI:spidev = spidev.SpiDev()
-        self._SPI.open(0, 0)
-        self._SPI.max_speed_hz = maxSpeedHz
+        self.__SPI:spidev = spidev.SpiDev()
+        self.__SPI.open(0, 0)
+        self.__SPI.max_speed_hz = maxSpeedHz
 
         GPIO.setup(pinReset, GPIO.OUT)
         GPIO.output(pinReset, GPIO.HIGH)
@@ -106,10 +106,10 @@ class MFRC522():
         GPIO.add_event_detect(pinIrq, GPIO.FALLING, callback=self.__irqCallback)
 
     def __irqCallback(self, notUsed=None):
-        self._IRQ.set()
+        self.__IRQ.set()
 
     def __spiTransfer(self, data:list) -> list:
-        try: r:list = self._SPI.xfer2(data)
+        try: r:list = self.__SPI.xfer2(data)
         except Exception: r:list = []
         finally: return r
 
@@ -121,15 +121,15 @@ class MFRC522():
 
     def __initialize(self, antennaLevel:int) -> int:
         self.__softReset()
-        self.__spiWrite(self.RC_TX_MODE, 0x00)
-        self.__spiWrite(self.RC_RX_MODE, 0x00)
-        self.__spiWrite(self.RC_MOD_WIDTH, 0x26)
-        self.__spiWrite(self.RC_T_MOD, 0x8D)
-        self.__spiWrite(self.RC_T_PRESCALER, 0x3E)
-        self.__spiWrite(self.RC_T_RELOAD_HIGH, 0x03)
-        self.__spiWrite(self.RC_T_RELOAD_LOW, 0xE8)
-        self.__spiWrite(self.RC_TX_ASK, 0x40)
-        self.__spiWrite(self.RC_MODE, 0x3D)
+        self.__spiWrite(self.__RC_TX_MODE, 0x00)
+        self.__spiWrite(self.__RC_RX_MODE, 0x00)
+        self.__spiWrite(self.__RC_MOD_WIDTH, 0x26)
+        self.__spiWrite(self.__RC_T_MOD, 0x8D)
+        self.__spiWrite(self.__RC_T_PRESCALER, 0x3E)
+        self.__spiWrite(self.__RC_T_RELOAD_HIGH, 0x03)
+        self.__spiWrite(self.__RC_T_RELOAD_LOW, 0xE8)
+        self.__spiWrite(self.__RC_TX_ASK, 0x40)
+        self.__spiWrite(self.__RC_MODE, 0x3D)
         self.antennaEnable(True)
         return self.antennaLevel(antennaLevel)
 
@@ -150,23 +150,23 @@ class MFRC522():
         return (True, data)
 
     def __crcCalculate(self, data:list) -> tuple[bool, list]:
-        self.__spiWrite(self.RC_COMMAND, self.CMD_IDLE)
-        self.__spiWrite(self.RC_DIV_IRQ, 0x04)
-        self.__BitmaskSet(self.RC_FIFO_LEVEL, 0x80)
+        self.__spiWrite(self.__RC_COMMAND, self.__CMD_IDLE)
+        self.__spiWrite(self.__RC_DIV_IRQ, 0x04)
+        self.__BitmaskSet(self.__RC_FIFO_LEVEL, 0x80)
 
         for d in data:
-            self.__spiWrite(self.RC_FIFO_DATA, d)
-        self.__spiWrite(self.RC_COMMAND, self.CMD_CALCULATE_CRC)
+            self.__spiWrite(self.__RC_FIFO_DATA, d)
+        self.__spiWrite(self.__RC_COMMAND, self.__CMD_CALCULATE_CRC)
 
         for timeout in range(5000, 0, -1):
-            irq:int = self.__spiRead(self.RC_DIV_IRQ)
+            irq:int = self.__spiRead(self.__RC_DIV_IRQ)
             if (irq & 0x04) != 0: break
             if timeout <= 1: return (False, [])
-        self.__spiWrite(self.RC_COMMAND, self.CMD_IDLE)
+        self.__spiWrite(self.__RC_COMMAND, self.__CMD_IDLE)
 
         crc:list = []
-        crc.append(self.__spiRead(self.RC_CRC_RESULT_LOW))
-        crc.append(self.__spiRead(self.RC_CRC_RESULT_HIGH))
+        crc.append(self.__spiRead(self.__RC_CRC_RESULT_LOW))
+        crc.append(self.__spiRead(self.__RC_CRC_RESULT_HIGH))
 
         if len(crc) != 2: return (False, [])
         return (True, crc)
@@ -179,42 +179,42 @@ class MFRC522():
         return True
 
     def __piccCommunication(self, command:int, data:list, framingBit:int, checkCrc:bool) -> tuple[str, list, int]:
-        if command == self.CMD_AUTHENTICATION: irqWait:int = 0x10
-        elif command == self.CMD_TRANSCEIVE: irqWait:int = 0x30
+        if command == self.__CMD_AUTHENTICATION: irqWait:int = 0x10
+        elif command == self.__CMD_TRANSCEIVE: irqWait:int = 0x30
         else: irqWait:int = 0x00
 
-        self.__spiWrite(self.RC_COMMAND, self.CMD_IDLE)
-        self.__spiWrite(self.RC_COM_IRQ, 0x7F)
-        self.__BitmaskSet(self.RC_FIFO_LEVEL, 0x80)
-        self.__spiWrite(self.RC_BIT_FRAMING, framingBit)
+        self.__spiWrite(self.__RC_COMMAND, self.__CMD_IDLE)
+        self.__spiWrite(self.__RC_COM_IRQ, 0x7F)
+        self.__BitmaskSet(self.__RC_FIFO_LEVEL, 0x80)
+        self.__spiWrite(self.__RC_BIT_FRAMING, framingBit)
 
         for d in data:
-            self.__spiWrite(self.RC_FIFO_DATA, d)
-        self.__spiWrite(self.RC_COMMAND, command)
+            self.__spiWrite(self.__RC_FIFO_DATA, d)
+        self.__spiWrite(self.__RC_COMMAND, command)
 
-        if command == self.CMD_TRANSCEIVE:
-            self.__BitmaskSet(self.RC_BIT_FRAMING, 0x80)
+        if command == self.__CMD_TRANSCEIVE:
+            self.__BitmaskSet(self.__RC_BIT_FRAMING, 0x80)
 
         for timeout in range(2000, 0, -1):
-            irq:int = self.__spiRead(self.RC_COM_IRQ)
+            irq:int = self.__spiRead(self.__RC_COM_IRQ)
             if (irq & irqWait) != 0: break
             if (irq & 0x01) != 0: return ("PICC_TIMEOUT", [], 0)
             if timeout <= 1: return ("SOFT_TIMEOUT", [], 0)
-        self.__BitmaskClear(self.RC_BIT_FRAMING, 0x80)
+        self.__BitmaskClear(self.__RC_BIT_FRAMING, 0x80)
 
-        error:int = self.__spiRead(self.RC_ERROR)
+        error:int = self.__spiRead(self.__RC_ERROR)
         if (error & 0x01) != 0: return ("PROTOCOL_ERROR", [], 0)
         if (error & 0x02) != 0: return ("PARITY_ERROR", [], 0)
         if (error & 0x04) != 0: return ("CRC_ERROR", [], 0)
         if (error & 0x10) != 0: return ("BUFFER_OVERFLOW", [], 0)
 
         newData:list = []
-        newDataLength:int = self.__spiRead(self.RC_FIFO_LEVEL)
+        newDataLength:int = self.__spiRead(self.__RC_FIFO_LEVEL)
         while newDataLength > 0:
-            newData.append(self.__spiRead(self.RC_FIFO_DATA))
+            newData.append(self.__spiRead(self.__RC_FIFO_DATA))
             newDataLength -= 1
 
-        validBits:int = self.__spiRead(self.RC_CONTROL) & 0x07
+        validBits:int = self.__spiRead(self.__RC_CONTROL) & 0x07
         if len(newData) > 0 and checkCrc:
             if len(newData) == 1 and validBits == 4: return ("MF_NACK", [], 0)
             if len(newData) < 2 or validBits != 0: return ("CRC_ERROR", [], 0)
@@ -225,19 +225,19 @@ class MFRC522():
         return (status, newData, validBits)
 
     def __piccHalt(self) -> bool:
-        (success, buffer) = self.__crcAppend(self.MF_HALT.copy())
+        (success, buffer) = self.__crcAppend(self.__MF_HALT.copy())
         if not success: return False
 
-        self.__BitmaskClear(self.RC_STATUS_2, 0x80)
-        (status, data, validBits) = self.__piccCommunication(self.CMD_TRANSCEIVE, buffer, 0x00, False)
+        self.__BitmaskClear(self.__RC_STATUS_2, 0x80)
+        (status, data, validBits) = self.__piccCommunication(self.__CMD_TRANSCEIVE, buffer, 0x00, False)
         self.mifareDeauthenticate()
 
         return status == "PICC_TIMEOUT" or status == "SOFT_TIMEOUT"
 
     def __piccReset(self) -> None:
-        self.__spiWrite(self.RC_COMMAND, self.CMD_IDLE)
+        self.__spiWrite(self.__RC_COMMAND, self.__CMD_IDLE)
         self.mifareDeauthenticate()
-        self.__BitmaskClear(self.RC_COLL, 0x80)
+        self.__BitmaskClear(self.__RC_COLL, 0x80)
 
     def __piccType(self, sak:int) -> str:
         sak:int = sak & 0x7F
@@ -267,7 +267,7 @@ class MFRC522():
         (success, data) = self.__crcAppend(data)
         if not success: return "CRC_ERROR"
 
-        (status, newData, validBits) = self.__piccCommunication(self.CMD_TRANSCEIVE, data, 0x00, False)
+        (status, newData, validBits) = self.__piccCommunication(self.__CMD_TRANSCEIVE, data, 0x00, False)
         if acceptTimeout and status == "PICC_TIMEOUT": return "OK"
         if acceptTimeout and status == "SOFT_TIMEOUT": return "OK"
         if status != "OK":  return status
@@ -318,69 +318,72 @@ class MFRC522():
             for passing in range(maxTryPerUnbrickCode + 1):
                 if not self.__piccHalt(): return "ERROR_HALT"
 
-                status = self.__mifareTransceive([0x40], False)
-                if status == "OK":  return self.__mifareTransceive([0x43], False)
+                status = self.__mifareTransceive([self.__MF_UID_PERSONALIZE], False)
+                if status == "OK":  return self.__mifareTransceive([self.__MF_SET_MOD_TYPE], False)
                 if passing >= maxTryPerUnbrickCode: break
                 if self.mifareWrite(0, unbrickCode): continue
         return "UID_BRICKED"
 
     def __softReset(self) -> None:
-        self.__spiWrite(self.RC_COMMAND, self.CMD_SOFT_RESET)
+        self.__spiWrite(self.__RC_COMMAND, self.__CMD_SOFT_RESET)
         time.sleep(0.05)
-        self.__spiWrite(self.RC_T_MOD, 0x87)
-        self.__spiWrite(self.RC_T_PRESCALER, 0xFF)
-        self.__spiWrite(self.RC_TX_ASK, 0x40)
-        self.__spiWrite(self.RC_MODE, 0x3D)
+        self.__spiWrite(self.__RC_T_MOD, 0x87)
+        self.__spiWrite(self.__RC_T_PRESCALER, 0xFF)
+        self.__spiWrite(self.__RC_TX_ASK, 0x40)
+        self.__spiWrite(self.__RC_MODE, 0x3D)
 
     def close(self) -> None:
         self.mifareDeauthenticate()
-        self._SPI.close()
-        GPIO.remove_event_detect(self._PIN_IRQ)
-        del self._PIN_IRQ
-        del self._IRQ
-        del self._SPI
+        self.__SPI.close()
+        GPIO.remove_event_detect(self.__PIN_IRQ)
+        del self.__PIN_IRQ
+        del self.__IRQ
+        del self.__SPI
 
     def antennaLevel(self, level:int) -> int:
         if level < 0: level = 1
         if level > 7: level = 7
-        self.__spiWrite(self.RC_RFC_FG, level << 4)
-        return (self.__spiRead(self.RC_RFC_FG) & 0x70) >> 4
+        self.__spiWrite(self.__RC_RFC_FG, level << 4)
+        return (self.__spiRead(self.__RC_RFC_FG) & 0x70) >> 4
 
     def antennaEnable(self, enable:bool) -> None:
-        if enable: self.__BitmaskSet(self.RC_TX_CONTROL, 0x03)
-        else: self.__BitmaskClear(self.RC_TX_CONTROL, 0x03)
+        if enable: self.__BitmaskSet(self.__RC_TX_CONTROL, 0x03)
+        else: self.__BitmaskClear(self.__RC_TX_CONTROL, 0x03)
 
     def piccWaitTag(self, antennaLevel:int, timeout:int) -> int:
-        self._IRQ.clear()
+        self.__IRQ.clear()
         startTime:time = time.time()
 
         while timeout == 0 or ((time.time() - startTime) < timeout):
             self.__initialize(antennaLevel)
-            self.__spiWrite(self.RC_COM_IRQ, 0x00)
-            self.__spiWrite(self.RC_COM_I_EN, 0xA0)
-            self.__spiWrite(self.RC_FIFO_DATA, 0x26)
-            self.__spiWrite(self.RC_COMMAND, 0x0C)
-            self.__spiWrite(self.RC_BIT_FRAMING, 0x87)
-            if self._IRQ.wait(0.1): break
+            self.__spiWrite(self.__RC_COM_IRQ, 0x00)
+            self.__spiWrite(self.__RC_COM_I_EN, 0xA0)
+            self.__spiWrite(self.__RC_FIFO_DATA, 0x26)
+            self.__spiWrite(self.__RC_COMMAND, 0x0C)
+            self.__spiWrite(self.__RC_BIT_FRAMING, 0x87)
+            if self.__IRQ.wait(0.1): break
 
-        self._IRQ.clear()
+        self.__IRQ.clear()
         return self.__initialize(antennaLevel)
 
     def piccReestablishCommunication(self, uid:int) -> bool:
         if not self.__piccHalt(): return False
-        if not self.piccRequest(self.MF_WUP_A): return False
+        if not self.piccRequest(True): return False
         try :
             (success, newUid, newSak, newType) = self.piccSelect()
             return success and newUid == uid
         except Exception: return False
 
-    def piccRequest(self, command:int) -> bool:
+    def piccRequest(self, wakeUp:bool) -> bool:
+        command:list = [self.__MF_REQ_A]
+        if wakeUp: command = [self.__MF_WUP_A]
+
         self.__piccReset()
-        (status, data, validBits) = self.__piccCommunication(self.CMD_TRANSCEIVE, [command], 0x07, False)
+        (status, data, validBits) = self.__piccCommunication(self.__CMD_TRANSCEIVE, command, 0x07, False)
         return status == "OK" and validBits == 0
 
     def piccSelect(self) -> tuple[bool, list, int, str]:
-        cascades:list = [self.MF_CL_1_ANTICOLLISION[0], self.MF_CL_2_ANTICOLLISION[0], self.MF_CL_3_ANTICOLLISION[0]]
+        cascades:list = [self.__MF_CL_1_ANTICOLLISION[0], self.__MF_CL_2_ANTICOLLISION[0], self.__MF_CL_3_ANTICOLLISION[0]]
         uid:list = []
         sak:int = 0x04
 
@@ -417,7 +420,7 @@ class MFRC522():
                     buffer = buffer[0:bufferLength + 1]
 
                 framingBit:int = (txLastBits << 4) + txLastBits
-                (status, data, validBits) = self.__piccCommunication(self.CMD_TRANSCEIVE, buffer, framingBit, False)
+                (status, data, validBits) = self.__piccCommunication(self.__CMD_TRANSCEIVE, buffer, framingBit, False)
                 if status != "OK" and status != "COLLISION": return (False, [status], sak, self.__piccType(sak))
                 if len(data) == 0: return (False, ["DATA_EMPTY"], sak, self.__piccType(sak))
 
@@ -426,7 +429,7 @@ class MFRC522():
                     buffer += data
 
                 if status == "COLLISION":
-                    collision:int = self.__spiRead(self.RC_COLL)
+                    collision:int = self.__spiRead(self.__RC_COLL)
                     if (collision & 0x20) != 0: return (False, ["COLLISION_ERROR"], sak, self.__piccType(sak))
 
                     collisionPosition:int = collision & 0x1F
@@ -451,7 +454,7 @@ class MFRC522():
         return (True, uid, sak, self.__piccType(sak))
 
     def mifareAuthenticate(self, authKeyType:int, blockAddress:int, key:list, uid:list) -> bool:
-        if authKeyType != self.MF_AUTH_A and authKeyType != self.MF_AUTH_B: return False
+        if authKeyType != self.__MF_AUTH_A and authKeyType != self.__MF_AUTH_B: return False
         if len(key) < 6: return False
         if len(uid) < 4 : return False
         if len(key) > 6: key = key[0:6]
@@ -460,13 +463,13 @@ class MFRC522():
         buffer:list = [authKeyType, blockAddress]
         for k in key: buffer.append(k)
         for id in uid: buffer.append(id)
-        (status, data, validBits) = self.__piccCommunication(self.CMD_AUTHENTICATION, buffer, 0x00, False)
+        (status, data, validBits) = self.__piccCommunication(self.__CMD_AUTHENTICATION, buffer, 0x00, False)
 
         if status != "OK": return False
-        return (self.__spiRead(self.RC_STATUS_2) & 0x08) != 0
+        return (self.__spiRead(self.__RC_STATUS_2) & 0x08) != 0
 
     def mifareDeauthenticate(self) -> None:
-        self.__BitmaskClear(self.RC_STATUS_2, 0x08)
+        self.__BitmaskClear(self.__RC_STATUS_2, 0x08)
 
     def mifareSevenByteUidFirstInit(self, typeFn:int) -> bool:
         match typeFn:
@@ -475,23 +478,26 @@ class MFRC522():
             case 2: uidFn:int = 0x20
             case 3: uidFn:int = 0x60
             case _: return False
-        (success, buffer) = self.__crcAppend([0x40, uidFn])
+        (success, buffer) = self.__crcAppend([self.__MF_UID_PERSONALIZE, uidFn])
         if not success: return False
         return self.__mifareTransceive(buffer, False) == "OK"
 
     def mifareDecrement(self, blockAddress:int, delta:int) -> bool:
-        return self.__mifareTwoStep(self.MF_DECREMENT, blockAddress, delta) == "OK"
+        return self.__mifareTwoStep(self.__MF_DECREMENT, blockAddress, delta) == "OK"
 
     def mifareIncrement(self, blockAddress:int, delta:int) -> bool:
-        return self.__mifareTwoStep(self.MF_INCREMENT, blockAddress, delta) == "OK"
+        return self.__mifareTwoStep(self.__MF_INCREMENT, blockAddress, delta) == "OK"
 
-    def mifareRestore(self, blockAddress:int) -> tuple[bool, int]:
-        status = self.__mifareTwoStep(self.MF_RESTORE, blockAddress, 0)
+    def mifareRestore(self, blockAddress:int) -> tuple[bool, bool, int]:
+        status = self.__mifareTwoStep(self.__MF_RESTORE, blockAddress, 0)
         if status != "OK":  return (False, 0)
+
+        (success, value) = self.mifareTransfer(blockAddress)
+        if not success: return (False, 0)
         return self.__mifareGetValue(blockAddress)
 
     def mifareTransfer(self, blockAddress:int) -> tuple[bool, int]:
-        status = self.__mifareTransceive([self.MF_TRANSFER, blockAddress], False)
+        status = self.__mifareTransceive([self.__MF_TRANSFER, blockAddress], False)
         if status != "OK":  return (False, 0)
         return self.__mifareGetValue(blockAddress)
 
@@ -515,10 +521,10 @@ class MFRC522():
         return self.mifareWrite(blockAddress, buffer)
 
     def mifareRead(self, blockAddress:int) -> tuple[bool, list]:
-        (success, buffer) = self.__crcAppend([self.MF_READ, blockAddress])
+        (success, buffer) = self.__crcAppend([self.__MF_READ, blockAddress])
         if not success: return (False, ["CRC_ERROR"])
 
-        (status, data, validBits) = self.__piccCommunication(self.CMD_TRANSCEIVE, buffer, 0x00, True)
+        (status, data, validBits) = self.__piccCommunication(self.__CMD_TRANSCEIVE, buffer, 0x00, True)
         if status != "OK": return (False, [status])
         return (True, data[:-2])
 
@@ -526,7 +532,7 @@ class MFRC522():
         if len(data) < 16: return False
         if len(data) > 16: data = data[0:16]
 
-        status = self.__mifareTransceive([self.MF_WRITE, blockAddress], False)
+        status = self.__mifareTransceive([self.__MF_WRITE, blockAddress], False)
         if status != "OK": return False
         return self.__mifareTransceive(data, False) == "OK"
 
@@ -539,7 +545,7 @@ class MFRC522():
         if not self.mifareWrite(0, data): return False
 
         if self.__piccHalt():
-            self.piccRequest(self.MF_WUP_A)
+            self.piccRequest(True)
         return True
 
     def mifareChangeTrailer(self, sector:int, keys:list, accessBits:list) -> bool:
@@ -577,14 +583,14 @@ class MFRC522():
         return datas
 
     def softPowerDown(self) -> None:
-        self.__BitmaskSet(self.RC_COMMAND, 0x10)
+        self.__BitmaskSet(self.__RC_COMMAND, 0x10)
 
     def softPowerUp(self) -> bool:
-        self.__BitmaskClear(self.RC_COMMAND, 0x10)
+        self.__BitmaskClear(self.__RC_COMMAND, 0x10)
         startTime:time = time.time()
         timeout:int = 60
 
         while (time.time() - startTime) < timeout:
-            if (self.__spiRead(self.RC_COMMAND)) & 0x10 != 0x10: return True
+            if (self.__spiRead(self.__RC_COMMAND)) & 0x10 != 0x10: return True
             time.sleep(0.1)
         return False
