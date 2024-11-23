@@ -49,8 +49,9 @@ I could not test those commands, because i do not have
 ```python
   sectorCount:int = 16
   key:list = [0xff,0xff,0xff,0xff,0xff,0xff]
+  useKeyB = False # True = mifareKeyB | False = mifareKeyA
 
-  datas:list = rfid.mifareDump(rfid.MF_AUTH_A|B, key, sectorCount, uid)
+  datas:list = rfid.mifareDump(useKeyB, key, sectorCount, uid)
   for data in datas:
       print (data)
 ```
@@ -58,8 +59,9 @@ I could not test those commands, because i do not have
 ### De/Authentication
 ```python
   key:list = [0xff,0xff,0xff,0xff,0xff,0xff]
+  useKeyB = False # True = mifareKeyB | False = mifareKeyA
 
-  success:bool = rfid.mifareAuthenticate(rfid.MF_AUTH_A|B, blockAddress, key, uid)
+  success:bool = rfid.mifareAuthenticate(useKeyB, blockAddress, key, uid)
   rfid.mifareDeauthenticate()
 ```
 
